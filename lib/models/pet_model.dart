@@ -19,7 +19,6 @@ class PetModel {
     required this.numPets,
   });
 
-  // Convert JSON to PetModel
   factory PetModel.fromJson(Map<String, dynamic> json) {
     return PetModel(
       id: json['id'],
@@ -27,13 +26,12 @@ class PetModel {
       petName: json['petName'],
       petImage: json['petImage'],
       isFriendly: json['isFriendly'],
-      age: json['age'] ?? 0, // Default 0 if missing
-      gender: json['gender'] ?? 'Unknown', // Default 'Unknown' if missing
-      numPets: json['numPets'] ?? 1, // Default 1 if missing
+      age: json['age'] ?? 0,
+      gender: json['gender'] ?? 'Unknown',
+      numPets: json['numPets'] ?? 1,
     );
   }
 
-  // Convert PetModel to JSON (for saving to database)
   Map<String, dynamic> toJson() {
     return {
       'id': id,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import '../models/pet_model.dart';
 import '../services/api_service.dart';
 import '../database/pet_db.dart';
@@ -19,7 +19,7 @@ class PetProvider extends ChangeNotifier {
 
   Future<void> fetchPets() async {
     isLoading = true;
-    _errorMessage = ''; // Clear previous errors
+    _errorMessage = '';
     notifyListeners();
 
     try {
@@ -27,7 +27,9 @@ class PetProvider extends ChangeNotifier {
       _filteredPets = _pets.where((pet) => pet.isFriendly).toList();
     } catch (e) {
       _errorMessage = "Failed to fetch pets. Please try again.";
-      print("Error fetching pets: $e");
+      if (kDebugMode) {
+        print("Error fetching pets: $e");
+      }
       _pets = [];
       _filteredPets = [];
     } finally {
@@ -42,27 +44,33 @@ class PetProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       _errorMessage = "Error loading local pets.";
-      print("Error loading local pets: $e");
+      if (kDebugMode) {
+        print("Error loading local pets: $e");
+      }
     }
   }
 
   Future<void> addPet(PetModel pet) async {
     try {
       await PetDB.addPet(pet);
-      await loadLocalPets(); // Reload from database for consistency
+      await loadLocalPets();
     } catch (e) {
       _errorMessage = "Error adding pet.";
-      print("Error adding pet: $e");
+      if (kDebugMode) {
+        print("Error adding pet: $e");
+      }
     }
   }
 
   Future<void> deletePet(int index) async {
     try {
       await PetDB.deletePet(index);
-      await loadLocalPets(); // Reload from database to ensure UI updates correctly
+      await loadLocalPets();
     } catch (e) {
       _errorMessage = "Error deleting pet.";
-      print("Error deleting pet: $e");
+      if (kDebugMode) {
+        print("Error deleting pet: $e");
+      }
     }
   }
 }

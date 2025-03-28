@@ -4,8 +4,8 @@ import '../core/globals.dart';
 import 'custom_text.dart';
 
 
-customAlertBox(
-    {required BuildContext context,
+customAlertBox({
+      required BuildContext context,
       required String title,
       required String content,
       required Function yes}) {

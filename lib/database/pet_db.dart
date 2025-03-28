@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import '../models/pet_model.dart';
 
+
 class PetDB {
   static const String petBox = "petBox";
 
