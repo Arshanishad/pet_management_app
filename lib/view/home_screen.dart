@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_management_app/view/register_screen.dart';
@@ -103,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }
-
                   return ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: w * 0.05),
                     itemCount: pets.length,
@@ -125,10 +125,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           leading: CircleAvatar(
                             radius: w * 0.08,
+                            backgroundColor: Colors.grey[300], // Placeholder color
                             backgroundImage: pet.petImage.isNotEmpty
-                                ? NetworkImage(pet.petImage)
+                                ? CachedNetworkImageProvider(pet.petImage)
                                 : const AssetImage("assets/default_pet.png") as ImageProvider,
-                            onBackgroundImageError: (_, __) => const Icon(Icons.error),
+                            child: pet.petImage.isEmpty
+                                ? const Icon(Icons.error, color: Colors.red)
+                                : null,
                           ),
                           trailing: Icon(
                             Icons.pets,
